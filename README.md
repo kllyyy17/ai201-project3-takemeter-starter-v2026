@@ -54,35 +54,91 @@
      The decision rule is worth a point on its own and it's the thing most
      people leave out. Every taxonomy has a hardest boundary. Name yours. -->
 
-### `label_one`
+### `question`
 
-**Definition:**
-
-**Example 1:**
->
-
-**Example 2:**
->
-
-### `label_two`
-
-**Definition:**
+**Definition:** The post mainly asks the community something, whether for an 
+answer, a list of opinions, or help with the poster's own situation.
 
 **Example 1:**
->
+> "Ultra niche counterpicks?" asks for a list of examples and offers no argument.
 
 **Example 2:**
->
+> "Do slows stack? If I use talon w and smite do I get 2 slows..." asks a mechanics question for personal use.
+
+### `analysis`
+
+**Definition:** The post argues a point and backs it with at least one concrete, 
+checkable specific, such as a stat, a named item or ability detail, a patch note, 
+or a cited source.
+
+**Example 1:**
+> "Diadem of Songs needs a rework." cites pick rate and win rate comparisons.
+
+**Example 2:**
+> "Why do people believe Loser's Queue is real?" argues against a claim using cited sources and statistical analyses.
+
+### `opinion`
+
+**Definition:** The post states a view, suggestion, or complaint about the game, 
+Riot, or the community, supported only by the poster's experience or reasoning 
+and nothing checkable.
+
+**Example 1:**
+> "Atakhan feels like such a fever dream addition to the game" states a feeling about a feature with no support.
+
+**Example 2:**
+> "0 sympathy for those being banned after playing on any sort of smurf account" is a strong claim backed by personal frustration only.
+
+### `personal`
+
+**Definition:** The post is mainly about the poster's own life, feelings, or 
+story, and doesn't ask the community anything or argue a point about the game.
+
+**Example 1:**
+> "Anxiety medication has completely changed how I play ARAM" is a personal story.
+
+**Example 2:**
+> "I realized that ranked just isn't the kind of progression I want anymore" is a reflection on the poster's own choices.
 
 ### The hardest boundary
 
-**Which two labels:**
+**Which two labels:** analysis vs. opinion
+
+**A post that sits on the line:** "Riot is actively killing socializing."
+It names concrete policies (Premade Only chat by default, post-game chat
+hidden behind two clicks) and quotes an exchange with a Riot employee, but it
+is strongly opinionated and the evidence is selective. Under the rule above
+it is analysis.
 
 **The decision rule I used every time:**
 <!-- e.g. "If the post names a specific checkable fact, it's `analysis`, even
      if the tone is heated." -->
+If the post's main claim is supported by at least one checkable specific,
+label it analysis, even if the tone is heated. A checkable specific is a number,
+a named item, ability, policy, or rule detail that someone else could verify,
+or a quoted or cited source, and it must directly support the post's main
+claim. A quote or stat that only sits near the claim doesn't count. Numbers
+from the poster's own games or experience ("I won 31 of 60 games") count as
+experience, not as checkable specifics, so label those opinion. A title
+written as a question doesn't decide anything. Label by what the body does.
 
 
+### Other decision rules
+
+question vs. analysis: If the post asks something but then develops its own answer 
+using checkable specifics, label it analysis. If it asks and offers little or no 
+developed answer, label it question.
+
+question vs. opinion: If the post asks something and the main point is a question 
+the poster wants answered, label it question. If the question is rhetorical and 
+the real content is a complaint, label it opinion.
+
+opinion vs. personal: If the main point is a claim about the game, Riot, or 
+the community that others could agree or disagree with, label it opinion. 
+If the main point is the poster's own situation, feelings, or story, label it personal.
+
+question vs. personal: If the post ends with a direct question to the
+community, label it question, even if most of the post is a story.
 
 ---
 
