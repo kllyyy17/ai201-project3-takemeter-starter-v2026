@@ -198,15 +198,24 @@ No label is above 70%. `analysis` and `personal` are the thin ones; with a 15% t
 
 <!-- Your starting model, your settings, and anything you changed and why. -->
 
-**Base model:**
+**Base model:** `distilbert-base-uncased`, fine-tuned for four-way classification (`question`, `opinion`, `personal`, `analysis`).
 
-**Settings:** <!-- epochs, learning rate, batch size, seed -->
+**Settings:** 3 epochs, learning rate 2e-5, batch size 16, 128 tokens per post, seed 42.
 
-**Anything I changed from the defaults, and why:**
+**Trained on:** CPU (`device: cpu`, torch 2.14.1+cpu), recorded in `results.json`. Training took about 3 minutes. Results can differ slightly on other hardware even with the same data and seed, so the device is part of the result.
 
-**Split sizes:** <!-- train / val / test, and per-label counts in the test
-split. If a label had fewer than about 8 in test, say so — it explains a lot
-of next unit's variance. -->
+**Anything I changed from the defaults, and why:** Nothing. All settings are the notebook defaults. The only edit to the notebook was setting `LABELS` to my four labels so it matches `labels.csv`.
+
+**Split sizes:** 139 train / 31 validation / 30 test (stratified 70/15/15 of the 200 posts).
+
+| Label | Train | Val | Test |
+|---|---|---|---|
+| question | 49 | 11 | 11 |
+| opinion | 48 | 11 | 10 |
+| personal | 21 | 5 | 5 |
+| analysis | 21 | 4 | 4 |
+
+`personal` (5) and `analysis` (4) have fewer than 8 examples in the test split. One wrong prediction moves their F1 a lot, so expect their scores to jump between seeds next unit.
 
 
 
