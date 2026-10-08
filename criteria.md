@@ -53,7 +53,7 @@ whether you hit them:
 
 ## 1. Overall accuracy on the held-out test split is at least 0.55.
 
-**Why this target:** Four labels means a coin-flip guesser gets about 25%, but `question` is already my largest label (14 of the 34 posts I've labeled so far, about 41%), so a model that just always guesses `question` would clear roughly 0.40 without learning anything. 0.55 has to beat that lazy baseline by a real margin, but with ~200 posts split four ways I don't have the data to responsibly promise 0.70.
+**Why this target:** Four labels means a coin-flip guesser gets about 25%, but `question` is my largest label (71 of the final 200 posts, 35.5%), so a model that just always guesses `question` would score roughly 0.36 without learning anything. 0.55 has to beat that lazy baseline by a real margin, but with ~200 posts split four ways I don't have the data to responsibly promise 0.70.
 
 
 
@@ -61,7 +61,7 @@ whether you hit them:
 
 ## 2. Every label has an F1 of at least 0.40 on the held-out test split.
 
-**Why this target:** `personal` and `analysis` are my smallest labels right now (5 and 6 of 34 so far), so they'll end up with the fewest test examples and the jumpiest scores. 0.40 is a floor I think is reachable without pretending a ~6-example test slice will be stable, while still ruling out a model that nails `question` and `opinion` but basically can't find `personal` at all.
+**Why this target:** `personal` and `analysis` are my smallest labels (31 and 29 of 200), so they get only 5 and 4 test examples and the jumpiest scores. 0.40 is a floor I think is reachable without pretending a ~6-example test slice will be stable, while still ruling out a model that nails `question` and `opinion` but basically can't find `personal` at all.
 
 
 
@@ -69,7 +69,7 @@ whether you hit them:
 
 ## 3. No single label makes up more than 45% of the final ~200-post labeled set.
 
-**Why this target:** `question` is the easy label to over-collect because Reddit threads are full of literal questions, and in my 34 labeled so far it's already at 41%. 45% gives me a little room without letting one label dominate the set the README's own 70% cap would still technically allow.
+**Why this target:** `question` is the easy label to over-collect because Reddit threads are full of literal questions, and it was at 41% in my first 34 posts and ended at 35.5% of the final 200. 45% gives me a little room without letting one label dominate, which the README's own 70% cap would still technically allow.
 
 
 
@@ -83,9 +83,9 @@ whether you hit them:
 
 ---
 
-## 5. Among the third of test predictions the model is most confident about (highest predicted-class probability), accuracy is at least 15 percentage points higher than among the third it's least confident about.
+## 5. Rank the 30 test-split predictions by the model's highest softmax probability (max predicted-class probability), take the top 10 and the bottom 10, and accuracy on the top 10 is at least 15 percentage points higher than on the bottom 10.
 
-**Why this target:** If the model's confidence doesn't track its correctness, the confidence score is decoration, not a signal — and with a taxonomy that has a genuinely fuzzy boundary (`analysis` vs. `opinion`), I expect a real gap between posts it's sure about and posts that sit near that line. 15 points is modest on purpose: with ~200 posts total, each third of the test split is small enough (maybe 13-15 posts) that a huge gap isn't something I can demand with a straight face.
+**Why this target:** If the model's confidence doesn't track its correctness, the confidence score is decoration, not a signal — and with a taxonomy that has a genuinely fuzzy boundary (`analysis` vs. `opinion`), I expect a real gap between posts it's sure about and posts that sit near that line. 15 points is modest on purpose: with ~200 posts total, each third of the 30-post test split is only 10 posts that a huge gap isn't something I can demand with a straight face.
 
 
 
