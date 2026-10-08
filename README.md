@@ -42,6 +42,8 @@
 <!-- Your community, and what your classifier sorts posts into. Three or four
      sentences. -->
 
+TakeMeter reads posts from r/leagueoflegends and sorts each one by what the poster is doing: asking the community something (`question`), arguing a point with checkable specifics such as stats, patch notes or cited sources (`analysis`), giving a view backed only by their own experience (`opinion`), or telling their own story (`personal`). The model is `distilbert-base-uncased` fine-tuned on 200 posts I collected and labelled by hand. The point is to tell evidence-backed arguments apart from plain takes in a community where both look equally confident.
+
 
 
 ---
@@ -230,19 +232,19 @@ No label is above 70%. `analysis` and `personal` are the thin ones; with a 15% t
      workflow and disclosing it costs you nothing. Not disclosing it is the
      problem. -->
 
-**Moment 1**
+**Moment 1: pre-labelling the posts**
 
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
+- *What I asked for:* I gave Claude my label definitions and decision rules and asked it to label 180 of my 200 posts, with a flag whenever it was torn between two labels.
+- *What came back:* A label and a flag for every post. Most were reasonable, but it often called a post `analysis` because the post contained a name or number, even when that detail did not support the post's main claim.
+- *What I changed:* I read every post and corrected 12 labels. Four were `analysis` calls where the specifics only sat near the claim, which is why my decision rule now says a checkable specific must directly support the main claim. The other 168 I kept after reading them.
 
-**Moment 2**
+**Moment 2: a rule that pushed stories into `question`**
 
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
+- *What I asked for:* While reviewing the pre-labels, I checked why so many story posts had come back as `question`. The AI was following my own rule: a direct question at the end made a post a `question`.
+- *What came back:* Labels that matched my written rule but not what I meant. A long story about a toxic lobby ending in "should I have reported them?" was labelled `question`.
+- *What I changed:* The rule was mine to fix, not the AI's. I narrowed it: `question` only when getting an answer is the main point, and `personal` when the question is a side note at the end of a story. I then re-checked every row that rule touched.
 
-**Pre-labelling disclosure:**
+**Pre-labelling disclosure:** 180 of the 200 labels started as Claude's pre-labels (`pre-labelled` in the `note` column). That includes my first 34 posts. I read every one and corrected 12 (`pre-labelled, corrected`). The other 20 were labelled cold by me alone (`cold`), chosen at random with a seed, with no AI and no notes. I did not use AI to write the criteria, and the final labels are my judgment. I have not yet compared the cold labels against the AI's labels on the same posts.
 
 <!-- ═══════════════════════ UNIT 6 — THE TEST ═══════════════════════
 
