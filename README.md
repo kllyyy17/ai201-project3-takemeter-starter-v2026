@@ -137,8 +137,10 @@ opinion vs. personal: If the main point is a claim about the game, Riot, or
 the community that others could agree or disagree with, label it opinion. 
 If the main point is the poster's own situation, feelings, or story, label it personal.
 
-question vs. personal: If the post ends with a direct question to the
-community, label it question, even if most of the post is a story.
+question vs. personal: Label it question only if getting an answer is the main
+point of the post, even when most of it is a story that sets up the ask. If the
+post is mostly a story or vent and the question is a side note at the end or
+rhetorical ("how do you not quit?"), label it personal.
 
 ---
 
@@ -147,45 +149,48 @@ community, label it question, even if most of the post is a story.
 <!-- Where you collected from, how you labelled, your counts, and three hard
      cases. -->
 
-**Where the posts came from:**
+**Where the posts came from:** Public posts from r/leagueoflegends (no login), copied by hand from the Hot, New and Top (this week and this month) views, then topped up from the same subreddit. I kept whole posts, title and body, and skipped image-only, video-only and esports schedule/update posts. `labels.csv` is one unsplit file; the notebook does the 70/15/15 split. I cut about 30 of the weakest posts (off-topic, promo, one-liners) to land on exactly 200.
 
-**How I labelled them:** <!-- Cold first? Pre-labelled with AI and corrected?
-Say so plainly — the disclosure is required, not penalised. -->
+**How I labelled them:** Every row's `note` says how it was labelled.
+- **20 rows labelled cold** (`cold`): picked at random with a seed so I didn't choose them, then labelled by me alone with my definitions and no AI or notes.
+- **180 rows pre-labelled with AI** (`pre-labelled`): Claude read each post with my definitions and decision rules and gave a label plus a flag when it was torn between two labels. This includes my first 34 posts, which I treated as pre-labelled. I then read every one and corrected the ones I disagreed with. 12 rows ended with a different label from the AI's (`pre-labelled, corrected`). Four of them were the AI calling something `analysis` when its specifics did not directly support the main claim.
+- **One rule changed during review.** After correcting the AI's labels I narrowed question vs. personal (see "Other decision rules") because the old rule pushed story posts into `question`. I re-checked every row that rule touched.
+- I have not yet compared my cold labels with the AI's labels on the same posts; that is the next unit's agreement report.
 
 **Counts per label:**
 
 | Label | Count | Share |
 |---|---|---|
-|  |  |  |
-|  |  |  |
-|  |  |  |
-| **Total** |  | 100% |
+| question | 71 | 35.5% |
+| opinion | 69 | 34.5% |
+| personal | 31 | 15.5% |
+| analysis | 29 | 14.5% |
+| **Total** | **200** | 100% |
+
+No label is above 70%. `analysis` and `personal` are the thin ones; with a 15% test split each will have only about 4 to 5 test posts, so their scores will be noisy.
 
 **Three hard cases**
 
-<!-- Any post that made you pause: what it was, which two labels it could have
-     been, and what you chose. These are worth more than the easy 190. -->
-
 **1.**
-> *The post:*
+> *The post:* "TIL that declining a game can demote honor levels." The poster says their honor level dropped, Riot support would not show evidence, and ends: "this seems a little bit overkill, no?"
 >
-> *Could have been:*
+> *Could have been:* opinion or personal.
 >
-> *I chose, because:*
+> *I chose, because:* opinion. It is told through the poster's own story, but the point is a complaint about Riot's honor system that others could agree or disagree with. Under opinion vs. personal, a claim about the game wins over the poster's own situation.
 
 **2.**
-> *The post:*
+> *The post:* "League Casual Storys: My encounter with misogyny within League of Legends." A long story about a toxic lobby that ends: "Should i have reported them or what do you guys and gals think?"
 >
-> *Could have been:*
+> *Could have been:* question or personal.
 >
-> *I chose, because:*
+> *I chose, because:* personal. My first rule said a direct question at the end made it `question`, which pushed nearly every story post into that label. I narrowed it: `question` only when getting an answer is the main point, and here the question is a side note at the end of a story.
 
 **3.**
-> *The post:*
+> *The post:* "Worlds is in 2 weeks, time to reopen champion queue." It names players such as Yukino and Sajed and streamers such as Doublelift to argue Champion Queue was good.
 >
-> *Could have been:*
+> *Could have been:* opinion or analysis.
 >
-> *I chose, because:*
+> *I chose, because:* opinion. The names are checkable, but they support a side point (CQ helps scouting), not the main claim that Riot should bring it back. A checkable specific must directly support the main claim, so it is opinion.
 
 ---
 
