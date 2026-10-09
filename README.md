@@ -260,18 +260,33 @@ No label is above 70%. `analysis` and `personal` are the thin ones; with a 15% t
 
 | Measure | Baseline | Trained | Difference |
 |---|---|---|---|
-| Overall accuracy |  |  |  |
-| Macro F1 |  |  |  |
-| F1 — `label_one` |  |  |  |
-| F1 — `label_two` |  |  |  |
+| Overall accuracy | 0.633 | 0.300 | -0.333 |
+| Macro F1 | 0.571 | 0.178 | -0.393 |
+| F1 — `analysis` | 0.400 | 0.000 | -0.400 |
+| F1 — `opinion` | 0.400 | 0.296 | -0.104 |
+| F1 — `personal` | 0.727 | 0.000 | -0.727 |
+| F1 — `question` | 0.759 | 0.417 | -0.342 |
+
+Both models were scored on the same 30 held-out posts in `test_split.csv` (`question` 11, `opinion` 10, `personal` 5, `analysis` 4). The baseline is `facebook/bart-large-mnli`, zero-shot, run locally.
+
+**Which baseline this is:** the table reports the **bare-label-names** run (`--definitions none.txt`), not the run with my definitions. I chose it because it is the stronger and fairer opponent. The two runs:
+
+| Baseline prompt | Accuracy | Macro F1 |
+|---|---|---|
+| Bare label names | 0.633 | 0.571 |
+| My full-sentence definitions | 0.200 | 0.133 |
+
+My definitions were worth **-0.433** accuracy here. `baseline.py` slots each definition into the template "This post is {definition}.", and my definitions are full sentences starting "The post…", so the model reads an ungrammatical sentence. The definitions work as a taxonomy for me and for the trained model, but not as zero-shot hypotheses in this template.
 
 **What I predicted before I looked:**
 <!-- Milestone 1 asks you to write this BEFORE seeing the trained numbers. A
      prediction made afterwards isn't one. -->
+The trained model will beat the baseline most on `opinion` and `personal`, where the baseline scored 0.000, because those labels depend on tone and framing that a zero-shot model reading label names can't see.
+
+**Result: the prediction was wrong.** I wrote it after seeing the baseline scored 0.000 on `opinion` and `personal` with my definitions. I then switched the reported baseline to the bare-names run, where `personal` scores 0.727, so the premise no longer held. The trained model did not beat the baseline on any label. It beat nothing on `personal` (0.000 vs 0.727) and was weakest on `analysis` (0.000).
 
 **What the gap actually means:**
-<!-- If the baseline matched your trained model, your fine-tuning added
-     nothing — and that is a real finding, not a failure. Say it plainly. -->
+Fine-tuning added nothing on this test set. A general model reading only the label names beat my fine-tuned DistilBERT by 0.333 accuracy (about 10 of 30 posts). The trained model's 0.000 F1 on `analysis` and `personal` suggests it rarely or never predicts those classes, so it is closer to guessing than to learning my taxonomy. Likely causes are the small training set (200 posts across four labels, with `analysis` and `personal` the rarest) and a short CPU training run. I have not yet confirmed this from the confusion matrix. The per-label scores for `analysis` (4 posts) and `personal` (5 posts) are noisy, but the overall gap is large enough to be real.
 
 
 

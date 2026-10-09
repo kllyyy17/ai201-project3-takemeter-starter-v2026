@@ -5,6 +5,7 @@
 #
 # Delete the examples below and put yours in.
 
-analysis: makes an argument backed by a specific, checkable fact
-hot_take: a confident claim with no support offered
-reaction: an immediate response to something that just happened
+question: The post mainly asks the community something, whether for an answer, a list of opinions, or help with the poster's own situation.
+analysis: The post argues a point and backs it with at least one concrete, checkable specific, such as a stat, a named item or ability detail, a patch note, or a cited source.
+opinion: The post states a view, suggestion, or complaint about the game, Riot, or the community, supported only by the poster's experience or reasoning and nothing checkable.
+personal: The post is mainly about the poster's own life, feelings, or story, and doesn't ask the community anything or argue a point about the game.
