@@ -79,6 +79,8 @@ whether you hit them:
 
 **Why this target:** My hardest boundary, `analysis` vs. `opinion`, turns on whether a "checkable specific" genuinely supports the post's main claim — a judgment call even under my own written rule. I'd expect to legitimately disagree with staff on a handful of the 30 posts that were picked specifically because they're ambiguous, so 100% isn't honest, but 70% is high enough to show the taxonomy is applied consistently.
 
+> **Note added in unit 6 (target unchanged, original reason left above):** The reason above ties this criterion to my own `analysis` vs. `opinion` boundary, but the staff set is labelled under a different taxonomy (`analysis`, `reaction`, `hot_take`), so the test never touches my four labels or my model. What it measures is whether I apply a written rule the way it is written. That is indirect evidence about the consistency of my own 200 labels, not proof of it. The 70% still makes sense because staff picked ambiguous posts on purpose, so I expect to legitimately disagree on some of the 30.
+
 
 
 ---
