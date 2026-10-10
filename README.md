@@ -305,23 +305,20 @@ Fine-tuning added nothing on this test set. A general model reading only the lab
 | 4.  |  |  |  |  |  |
 | 5.  |  |  |  |  |  |
 
+**Device:** CPU (`device: cpu`, torch 2.14.1+cpu).
+**Spread:** Accuracy ranges from 0.300 to 0.367, a spread of 0.067 (6.7 points), under the 10-point mark.
+
 ### Confusion matrix
 
-<!-- ⚠️ TYPED AS A MARKDOWN TABLE. The notebook prints one ready to paste.
-     An image of a matrix earns nothing. -->
-
-| true \ predicted |  |  |  |
-|---|---|---|---|
-| **** |  |  |  |
-| **** |  |  |  |
-| **** |  |  |  |
+| true \ predicted | question | opinion | personal | analysis |
+|---|---|---|---|---|
+| **question** | 5 | 6 | 0 | 0 |
+| **opinion** | 6 | 4 | 0 | 0 |
+| **personal** | 2 | 3 | 0 | 0 |
+| **analysis** | 0 | 4 | 0 | 0 |
 
 **My biggest off-diagonal number, and what it means:**
-<!-- Not "the model made mistakes" — WHICH boundary it didn't learn, and which
-     direction. "7 real analysis posts were called hot_take and only 3 went the
-     other way" is a direction, not just an error rate. -->
-
-
+6 real `question` posts were called `opinion` and 6 real `opinion` posts were called `question`, so the model can't separate that pair in either direction, and it never predicted `personal` or `analysis` at all.
 
 ---
 
