@@ -157,7 +157,7 @@ rhetorical ("how do you not quit?"), label it personal.
 - **20 rows labelled cold** (`cold`): picked at random with a seed so I didn't choose them, then labelled by me alone with my definitions and no AI or notes.
 - **180 rows pre-labelled with AI** (`pre-labelled`): Claude read each post with my definitions and decision rules and gave a label plus a flag when it was torn between two labels. This includes my first 34 posts, which I treated as pre-labelled. I then read every one and corrected the ones I disagreed with. 12 rows ended with a different label from the AI's (`pre-labelled, corrected`). Four of them were the AI calling something `analysis` when its specifics did not directly support the main claim.
 - **One rule changed during review.** After correcting the AI's labels I narrowed question vs. personal (see "Other decision rules") because the old rule pushed story posts into `question`. I re-checked every row that rule touched.
-- I have not yet compared my cold labels with the AI's labels on the same posts; that is the next unit's agreement report.
+- I have not yet compared my cold labels with the AI's labels on the same posts. The staff agreement report is a different check: it tests how I apply someone else's written rules, not how my cold labels compare with the AI's.
 
 **Counts per label:**
 
@@ -299,11 +299,13 @@ Fine-tuning added nothing on this test set. A general model reading only the lab
 
 | Criterion | Target | Seed 42 | Seed 7 | Seed 2024 | Verdict |
 |---|---|---|---|---|---|
-| 1.  |  |  |  |  |  |
-| 2.  |  |  |  |  |  |
-| 3.  |  |  |  |  |  |
-| 4.  |  |  |  |  |  |
-| 5.  |  |  |  |  |  |
+| 1. Overall accuracy | ≥ 0.55 | 0.300 | 0.367 | 0.333 | MISSED |
+| 2. Every label F1 | ≥ 0.40 | 0.000 (min: `personal`, `analysis`) | 0.000 (min: `personal`, `analysis`) | 0.000 (min: `personal`, `analysis`) | MISSED |
+| 3. No label > 45% of the labelled set | ≤ 45% | 35.5% (`question`, 71/200) | 35.5% | 35.5% | MET |
+| 4. Agreement with staff set | ≥ 70% (21/30) | not scored yet | not scored yet | not scored yet | PENDING |
+| 5. Top-10 vs bottom-10 confidence accuracy gap | ≥ 15 pts | 0.2 − 0.2 = 0 pts | 0.5 − 0.3 = 20 pts | 0.6 − 0.1 = 50 pts | MISSED |
+
+Criteria 3 and 4 measure my labels, not a trained model, so they don't change by seed; the same value is repeated in each column.
 
 **Device:** CPU (`device: cpu`, torch 2.14.1+cpu).
 **Spread:** Accuracy ranges from 0.300 to 0.367, a spread of 0.067 (6.7 points), under the 10-point mark.
@@ -329,24 +331,24 @@ Fine-tuning added nothing on this test set. A general model reading only the lab
 
 | # | Criterion | Target | Verdict | How I decided |
 |---|---|---|---|---|
-| 1 |  |  |  |  |
-| 2 |  |  |  |  |
-| 3 |  |  |  |  |
-| 4 |  |  |  |  |
-| 5 |  |  |  |  |
+| 1 | Overall accuracy | ≥ 0.55 | MISSED | 0.300, 0.367, 0.333. Every seed is below 0.55, and the best seed (0.367) is barely above the 0.36 I said an always-`question` guesser would score. |
+| 2 | Every label F1 | ≥ 0.40 | MISSED | `personal` and `analysis` have F1 0.000 on all three seeds, and `question`/`opinion` fall under 0.40 on some seeds (`question` 0.211 on seed 7, `opinion` 0.296 on seed 42). |
+| 3 | No label > 45% | ≤ 45% | MET | Counted in `labels.csv`: `question` 71, `opinion` 69, `personal` 31, `analysis` 29 of 200. The largest is 35.5%. |
+| 4 | Agreement with staff | ≥ 70% (21/30) | PENDING | My 30 labels are in `my_staff_labels.csv`, but `data/staff_labels.csv` has not arrived from my TF, so `agreement.py` can't run. I won't guess a number. |
+| 5 | Confidence gap | ≥ 15 pts | MISSED | The gap was 0, 20 and 50 points. The target has to hold on every seed and seed 42 shows no gap, so it is a miss even though two seeds passed. |
 
 **Diagnoses**
 
-<!-- For each miss: the cause, and how you know. The four common causes are:
-     too few examples for a label, a boundary you applied inconsistently, a
-     genuinely hard label pair, and a task the model can't reach from this
-     much data.
+**Criteria 1 and 2 (accuracy, per-label F1): the model can't reach this from my data and training run, with too few examples for `personal` and `analysis` as the contributing cause.**
+Evidence from the confusion matrix and the three results files:
+- The model never predicts `personal` or `analysis` on any seed (columns of zeros). The 140 training posts have only about 22 `personal` and 20 `analysis`, and 3 epochs at batch size 16 is only about 27 optimizer steps, so it likely never learned those labels at all.
+- Its mean softmax confidence is about 0.34 whether it is right or wrong (0.340 vs 0.335 on seed 42), against 0.25 for a uniform guess over four labels. It stayed close to guessing, so this looks like an under-trained model, not a model that learned my boundaries and got them wrong.
+- The `question` and `opinion` pair is confused in both directions (6 and 6 on seed 42; 9 `question` posts called `opinion` on seed 7). I can't tell from the matrix alone whether that is the model or my labels. The staff agreement check can't settle it either, because it uses the staff taxonomy (`analysis`/`reaction`/`hot_take`), not my four labels.
+- The zero-shot baseline scored 0.633 on the same posts, so the 200 posts contain enough signal to separate these labels. This points at my training setup and data size, not at an impossible task.
 
-     ⚠️ Use your agreement report as evidence. It is the only instrument you
-     have that can tell a LABELLING problem from a MODEL problem, and this
-     section is graded on whether you used it that way. -->
+**Criterion 5 (confidence): not clearly a labelling or data problem. The seed 42 gap is 0 and the three gaps (0, 20, 50 points) disagree with each other.** Each third is 10 posts, so one post moves a third's accuracy by 10 points; the spread across seeds is mostly noise. Mean confidence is the same when right and wrong, which says the model's softmax is not a usable signal at this stage. This criterion belongs with the model, not with my labels.
 
-
+**Criterion 4 (agreement): pending.** The agreement report compares my 30 labels with staff's, both made under the staff taxonomy, not mine. What it can show is whether I apply a written rule consistently, which is indirect evidence about my own 200 labels. What it can't show is whether my `question`/`opinion` boundary specifically was inconsistent, or why the model failed. Once `staff_labels.csv` arrives I'll update this section and say how much weight that evidence deserves for each miss.
 
 ---
 
