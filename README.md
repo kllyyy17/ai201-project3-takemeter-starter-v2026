@@ -408,24 +408,49 @@ Evidence from the confusion matrix and the three results files:
 
 ## The Improvement
 
-**What I changed:**
+**What I changed:** `EPOCHS` from 3 to 10, and nothing else. Learning rate (2e-5), batch size (16), max length (128), the four labels and the 200 posts are unchanged, so 0 rows were relabelled and 0 posts added. `RUN_LABEL = "after"` wrote `results_three_seeds_after.json` and left the before file alone.
 
-**Which diagnosis pointed at it:**
+**Which diagnosis pointed at it:** Criteria 1 and 2. My diagnosis said the model looked under-trained: about 27 optimizer steps, confidence near chance (about 0.34 against 0.25 for guessing), and no `personal` or `analysis` predictions. It also named too few `personal` and `analysis` examples as a contributing cause, so the diagnosis pointed at both training and data. Before changing anything I checked the training curve on seed 42. At 3 epochs validation loss was still falling (1.325 → 1.295 → 1.285) and accuracy was still rising (0.355 → 0.452 → 0.516), so I tried more epochs first because it was the cheaper test.
+
+**Before vs. after, per seed**
+
+| Measure | Before (42 / 7 / 2024) | After (42 / 7 / 2024) |
+|---|---|---|
+| Accuracy | 0.300 / 0.367 / 0.333 | 0.367 / 0.500 / 0.467 |
+| Macro F1 | 0.178 / 0.193 / 0.195 | 0.213 / 0.375 / 0.275 |
+| F1 `question` | 0.417 / 0.211 / 0.381 | 0.519 / 0.600 / 0.560 |
+| F1 `opinion` | 0.296 / 0.562 / 0.400 | 0.333 / 0.500 / 0.538 |
+| F1 `personal` | 0.000 / 0.000 / 0.000 | 0.000 / 0.000 / 0.000 |
+| F1 `analysis` | 0.000 / 0.000 / 0.000 | 0.000 / 0.400 / 0.000 |
+| Confidence gap (pts) | 0 / 20 / 50 | 0 / −10 / 0 |
 
 ### Run Log — After
 
 | Criterion | Target | Seed 42 | Seed 7 | Seed 2024 | Verdict |
 |---|---|---|---|---|---|
-| 1.  |  |  |  |  |  |
-| 2.  |  |  |  |  |  |
-| 3.  |  |  |  |  |  |
-| 4.  |  |  |  |  |  |
-| 5.  |  |  |  |  |  |
+| 1. Overall accuracy | ≥ 0.55 | 0.367 | 0.500 | 0.467 | MISSED |
+| 2. Every label F1 | ≥ 0.40 | 0.000 (min: `personal`, `analysis`) | 0.000 (min: `personal`) | 0.000 (min: `personal`, `analysis`) | MISSED |
+| 3. No label > 45% of the labelled set | ≤ 45% | 35.5% (`question`, 71/200) | 35.5% | 35.5% | MET |
+| 4. Agreement with staff set | ≥ 70% (21/30) | not scored yet | not scored yet | not scored yet | PENDING |
+| 5. Top-10 vs bottom-10 confidence accuracy gap | ≥ 15 pts | 0.4 − 0.4 = 0 pts | 0.4 − 0.5 = −10 pts | 0.5 − 0.5 = 0 pts | MISSED |
 
-**Did it help, and how do I know:**
+Criteria 3 and 4 measure my labels, not a trained model, so they don't change by seed or by this improvement.
 
-<!-- If it didn't, say so. Relabelling that didn't help is a genuinely
-     interesting result and earns full credit. -->
+**Device:** CPU (`device: cpu`, torch 2.14.1+cpu), same as before.
+**Spread:** Accuracy ranges from 0.367 to 0.500, a spread of 0.133 (13.3 points), above the 10-point mark. Before it was 0.067. The notebook flags this as too small or too lopsided a dataset for a stable measure.
+
+### Confusion matrix — After (seed 42)
+
+| true \ predicted | question | opinion | personal | analysis |
+|---|---|---|---|---|
+| **question** | 7 | 4 | 0 | 0 |
+| **opinion** | 6 | 4 | 0 | 0 |
+| **personal** | 3 | 2 | 0 | 0 |
+| **analysis** | 0 | 4 | 0 | 0 |
+
+**My biggest off-diagonal number, and what it means:** 6 real `opinion` posts were called `question` and 4 real `question` posts were called `opinion`, so the model still can't separate that pair well in either direction. Compared with before, `question` correct went from 5 to 7 and `opinion` stayed at 4, while all 4 `analysis` posts still go to `opinion` and all 5 `personal` posts still go to `question` or `opinion`.
+
+**Did it help, and how do I know:** It helped partly, and not enough to meet any model criterion. Raising epochs from 3 to 10 lifted accuracy on all three seeds (mean 0.333 → 0.444) and macro F1 (mean 0.189 → 0.288), and the gain came entirely from `question` and `opinion`. `personal` is still never predicted correctly on any seed, and `analysis` was found on one seed only (1 of 4 test posts), so criteria 1, 2 and 5 are all still MISSED. Validation loss kept falling through epoch 10 on all three seeds, so more epochs did not overfit, but the thin labels stayed unlearned. That points back at the second half of my diagnosis: with about 20 training posts each, `personal` and `analysis` are a data problem, not a training-length problem. Confidence also did not improve (mean confidence about 0.46 whether right or wrong). Each test split is 30 posts, so one post is about 3 points and single-seed gains are noisy. The consistent upward direction across all three seeds is the stronger evidence. I changed only the epoch count, so I can attribute the change to it.
 
 
 
@@ -435,11 +460,14 @@ Evidence from the confusion matrix and the three results files:
 
 <!-- For each criterion still missed: what you'd do, and why you stopped. -->
 
-
+- **Criterion 1 (accuracy ≥ 0.55):** best seed is 0.500 and the mean is 0.444. I'd add about 30 posts each of `personal` and `analysis`, labelled with the same rules, then re-run the three seeds. I stopped because more epochs no longer addressed the thin labels, and collecting and labelling more posts was outside this milestone's one-change limit.
+- **Criterion 2 (every label F1 ≥ 0.40):** `personal` is 0.000 on every seed and `analysis` is 0.000 on two of three. Same fix: more examples of both. Adding `personal` posts matters most, since 0 of 5 test posts were right on every seed.
+- **Criterion 4 (agreement ≥ 70%):** still PENDING, because `data/staff_labels.csv` has not arrived, so `agreement.py` can't run. I won't report a number until it does, and then I'll fill in the Agreement Report above.
+- **Criterion 5 (confidence gap ≥ 15 pts):** the gaps are 0, −10 and 0, and mean confidence is about the same when right as when wrong (0.468 vs 0.459 on seed 42). The softmax is not a usable confidence signal at this data size, and more epochs did not fix it. I'd revisit it only after the thin labels are being predicted, since a model that never predicts two labels has no meaningful confidence on them.
 
 **The gap between what I meant my labels to capture and what the model
 learned:**
-<!-- Two sentences. Your confusion matrix is the evidence. -->
+I meant `analysis` and `personal` to be distinct kinds of posts, but the confusion matrix shows all 4 `analysis` test posts called `opinion` and all 5 `personal` posts called `question` or `opinion`. The model has learned a rough `question` vs. `opinion` split and little else, which fits roughly 20 training examples each for the two thin labels.
 
 
 

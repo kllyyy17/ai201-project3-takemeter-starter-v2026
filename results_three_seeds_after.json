@@ -1,0 +1,209 @@
+[
+  {
+    "seed": 42,
+    "n_test": 30,
+    "accuracy": 0.36666666666666664,
+    "f1_macro": 0.21296296296296297,
+    "per_label": {
+      "question": {
+        "precision": 0.4375,
+        "recall": 0.6363636363636364,
+        "f1": 0.5185185185185185,
+        "support": 11
+      },
+      "opinion": {
+        "precision": 0.2857142857142857,
+        "recall": 0.4,
+        "f1": 0.3333333333333333,
+        "support": 10
+      },
+      "personal": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 5
+      },
+      "analysis": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 4
+      }
+    },
+    "confusion": {
+      "question": {
+        "question": 7,
+        "opinion": 4,
+        "personal": 0,
+        "analysis": 0
+      },
+      "opinion": {
+        "question": 6,
+        "opinion": 4,
+        "personal": 0,
+        "analysis": 0
+      },
+      "personal": {
+        "question": 3,
+        "opinion": 2,
+        "personal": 0,
+        "analysis": 0
+      },
+      "analysis": {
+        "question": 0,
+        "opinion": 4,
+        "personal": 0,
+        "analysis": 0
+      }
+    },
+    "confidence": {
+      "mean_when_right": 0.4681023359298706,
+      "mean_when_wrong": 0.4591878056526184,
+      "accuracy_most_confident_third": 0.4,
+      "accuracy_least_confident_third": 0.4,
+      "n_per_third": 10
+    },
+    "device": "cpu",
+    "device_name": "CPU",
+    "torch_version": "2.14.1+cpu",
+    "max_length": 128
+  },
+  {
+    "seed": 7,
+    "n_test": 30,
+    "accuracy": 0.5,
+    "f1_macro": 0.375,
+    "per_label": {
+      "question": {
+        "precision": 0.47368421052631576,
+        "recall": 0.8181818181818182,
+        "f1": 0.6,
+        "support": 11
+      },
+      "opinion": {
+        "precision": 0.5,
+        "recall": 0.5,
+        "f1": 0.5,
+        "support": 10
+      },
+      "personal": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 5
+      },
+      "analysis": {
+        "precision": 1.0,
+        "recall": 0.25,
+        "f1": 0.4,
+        "support": 4
+      }
+    },
+    "confusion": {
+      "question": {
+        "question": 9,
+        "opinion": 2,
+        "personal": 0,
+        "analysis": 0
+      },
+      "opinion": {
+        "question": 5,
+        "opinion": 5,
+        "personal": 0,
+        "analysis": 0
+      },
+      "personal": {
+        "question": 4,
+        "opinion": 1,
+        "personal": 0,
+        "analysis": 0
+      },
+      "analysis": {
+        "question": 1,
+        "opinion": 2,
+        "personal": 0,
+        "analysis": 1
+      }
+    },
+    "confidence": {
+      "mean_when_right": 0.45228880643844604,
+      "mean_when_wrong": 0.45958420634269714,
+      "accuracy_most_confident_third": 0.4,
+      "accuracy_least_confident_third": 0.5,
+      "n_per_third": 10
+    },
+    "device": "cpu",
+    "device_name": "CPU",
+    "torch_version": "2.14.1+cpu",
+    "max_length": 128
+  },
+  {
+    "seed": 2024,
+    "n_test": 30,
+    "accuracy": 0.4666666666666667,
+    "f1_macro": 0.2746153846153846,
+    "per_label": {
+      "question": {
+        "precision": 0.5,
+        "recall": 0.6363636363636364,
+        "f1": 0.56,
+        "support": 11
+      },
+      "opinion": {
+        "precision": 0.4375,
+        "recall": 0.7,
+        "f1": 0.5384615384615384,
+        "support": 10
+      },
+      "personal": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 5
+      },
+      "analysis": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 4
+      }
+    },
+    "confusion": {
+      "question": {
+        "question": 7,
+        "opinion": 4,
+        "personal": 0,
+        "analysis": 0
+      },
+      "opinion": {
+        "question": 3,
+        "opinion": 7,
+        "personal": 0,
+        "analysis": 0
+      },
+      "personal": {
+        "question": 4,
+        "opinion": 1,
+        "personal": 0,
+        "analysis": 0
+      },
+      "analysis": {
+        "question": 0,
+        "opinion": 4,
+        "personal": 0,
+        "analysis": 0
+      }
+    },
+    "confidence": {
+      "mean_when_right": 0.47310248017311096,
+      "mean_when_wrong": 0.44983023405075073,
+      "accuracy_most_confident_third": 0.5,
+      "accuracy_least_confident_third": 0.5,
+      "n_per_third": 10
+    },
+    "device": "cpu",
+    "device_name": "CPU",
+    "torch_version": "2.14.1+cpu",
+    "max_length": 128
+  }
+]
