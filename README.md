@@ -244,6 +244,12 @@ No label is above 70%. `analysis` and `personal` are the thin ones; with a 15% t
 - *What came back:* Labels that matched my written rule but not what I meant. A long story about a toxic lobby ending in "should I have reported them?" was labelled `question`.
 - *What I changed:* The rule was mine to fix, not the AI's. I narrowed it: `question` only when getting an answer is the main point, and `personal` when the question is a side note at the end of a story. I then re-checked every row that rule touched.
 
+**Moment 3: reading my errors**
+
+- *What I asked for:* Claude helped me read the confusion matrices and the three-seed results files and look for patterns in what the model got wrong.
+- *What came back:* Three patterns: `personal` and `analysis` were never predicted on most seeds, `question` and `opinion` were confused in both directions, and confidence was about the same whether the model was right or wrong.
+- *What I changed:* I checked each pattern against the matrices and the training curve myself before using it. Those checks became the diagnoses, and the diagnosis of an under-trained model led to the one change I made (3 to 10 epochs). Claude did not decide which fix to try or what the verdicts were, and it did not touch my labels. The target numbers in `criteria.md` and the verdicts are mine.
+
 **Pre-labelling disclosure:** 180 of the 200 labels started as Claude's pre-labels (`pre-labelled` in the `note` column). That includes my first 34 posts. I read every one and corrected 12 (`pre-labelled, corrected`). The other 20 were labelled cold by me alone (`cold`), chosen at random with a seed, with no AI and no notes. I did not use AI to write the criteria, and the final labels are my judgment. I have not yet compared the cold labels against the AI's labels on the same posts.
 
 <!-- ═══════════════════════ UNIT 6 — THE TEST ═══════════════════════
