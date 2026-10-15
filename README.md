@@ -308,7 +308,7 @@ Fine-tuning added nothing on this test set. A general model reading only the lab
 | 1. Overall accuracy | ≥ 0.55 | 0.300 | 0.367 | 0.333 | MISSED |
 | 2. Every label F1 | ≥ 0.40 | 0.000 (min: `personal`, `analysis`) | 0.000 (min: `personal`, `analysis`) | 0.000 (min: `personal`, `analysis`) | MISSED |
 | 3. No label > 45% of the labelled set | ≤ 45% | 35.5% (`question`, 71/200) | 35.5% | 35.5% | MET |
-| 4. Agreement with staff set | ≥ 70% (21/30) | not scored yet | not scored yet | not scored yet | PENDING |
+| 4. Agreement with staff set | ≥ 70% (21/30) | 29/30 = 96.7% | 29/30 | 29/30 | MET |
 | 5. Top-10 vs bottom-10 confidence accuracy gap | ≥ 15 pts | 0.2 − 0.2 = 0 pts | 0.5 − 0.3 = 20 pts | 0.6 − 0.1 = 50 pts | MISSED |
 
 Criteria 3 and 4 measure my labels, not a trained model, so they don't change by seed; the same value is repeated in each column.
@@ -340,7 +340,7 @@ Criteria 3 and 4 measure my labels, not a trained model, so they don't change by
 | 1 | Overall accuracy | ≥ 0.55 | MISSED | 0.300, 0.367, 0.333. Every seed is below 0.55, and the best seed (0.367) is barely above the 0.36 I said an always-`question` guesser would score. |
 | 2 | Every label F1 | ≥ 0.40 | MISSED | `personal` and `analysis` have F1 0.000 on all three seeds, and `question`/`opinion` fall under 0.40 on some seeds (`question` 0.211 on seed 7, `opinion` 0.296 on seed 42). |
 | 3 | No label > 45% | ≤ 45% | MET | Counted in `labels.csv`: `question` 71, `opinion` 69, `personal` 31, `analysis` 29 of 200. The largest is 35.5%. |
-| 4 | Agreement with staff | ≥ 70% (21/30) | PENDING | My 30 labels are in `my_staff_labels.csv`, but `data/staff_labels.csv` has not arrived from my TF, so `agreement.py` can't run. I won't guess a number. |
+| 4 | Agreement with staff | ≥ 70% (21/30) | MET | `agreement.py` compared `my_staff_labels.csv` with `data/staff_labels.csv`: 29 of 30 agree (96.7%), well above the 21 needed. The one disagreement is argued in the Agreement Report. |
 | 5 | Confidence gap | ≥ 15 pts | MISSED | The gap was 0, 20 and 50 points. The target has to hold on every seed and seed 42 shows no gap, so it is a miss even though two seeds passed. |
 
 **Diagnoses**
@@ -354,7 +354,7 @@ Evidence from the confusion matrix and the three results files:
 
 **Criterion 5 (confidence): not clearly a labelling or data problem. The seed 42 gap is 0 and the three gaps (0, 20, 50 points) disagree with each other.** Each third is 10 posts, so one post moves a third's accuracy by 10 points; the spread across seeds is mostly noise. Mean confidence is the same when right and wrong, which says the model's softmax is not a usable signal at this stage. This criterion belongs with the model, not with my labels.
 
-**Criterion 4 (agreement): pending.** The agreement report compares my 30 labels with staff's, both made under the staff taxonomy, not mine. What it can show is whether I apply a written rule consistently, which is indirect evidence about my own 200 labels. What it can't show is whether my `question`/`opinion` boundary specifically was inconsistent, or why the model failed. Once `staff_labels.csv` arrives I'll update this section and say how much weight that evidence deserves for each miss.
+**Criterion 4 (agreement): met, and it tells me little about the model.** I agreed with staff on 29 of 30 posts (96.7%). The agreement report compares my labels with staff's, both made under the staff taxonomy, not mine, so it shows that I apply a written rule consistently, which is indirect evidence that my own 200 labels are not sloppy. The one disagreement (the shoe-rules post, `analysis` vs. `hot_take`) is pile (c): the rule is ambiguous there and my reading is defensible, so it is not a consistency problem on my side. That makes a labelling inconsistency an unlikely cause of the Criteria 1 and 2 misses, which fits the diagnosis above that the model is under-trained and short of `personal` and `analysis` examples. It can't show whether my `question`/`opinion` boundary specifically was consistent, since that boundary doesn't exist in the staff taxonomy, so I don't claim it clears that pair.
 
 ---
 
@@ -428,7 +428,7 @@ Evidence from the confusion matrix and the three results files:
 | 1. Overall accuracy | ≥ 0.55 | 0.367 | 0.500 | 0.467 | MISSED |
 | 2. Every label F1 | ≥ 0.40 | 0.000 (min: `personal`, `analysis`) | 0.000 (min: `personal`) | 0.000 (min: `personal`, `analysis`) | MISSED |
 | 3. No label > 45% of the labelled set | ≤ 45% | 35.5% (`question`, 71/200) | 35.5% | 35.5% | MET |
-| 4. Agreement with staff set | ≥ 70% (21/30) | not scored yet | not scored yet | not scored yet | PENDING |
+| 4. Agreement with staff set | ≥ 70% (21/30) | 29/30 = 96.7% | 29/30 | 29/30 | MET |
 | 5. Top-10 vs bottom-10 confidence accuracy gap | ≥ 15 pts | 0.4 − 0.4 = 0 pts | 0.4 − 0.5 = −10 pts | 0.5 − 0.5 = 0 pts | MISSED |
 
 Criteria 3 and 4 measure my labels, not a trained model, so they don't change by seed or by this improvement.
@@ -459,7 +459,7 @@ Criteria 3 and 4 measure my labels, not a trained model, so they don't change by
 
 - **Criterion 1 (accuracy ≥ 0.55):** best seed is 0.500 and the mean is 0.444. I'd add about 30 posts each of `personal` and `analysis`, labelled with the same rules, then re-run the three seeds. I stopped because more epochs no longer addressed the thin labels, and collecting and labelling more posts was outside this milestone's one-change limit.
 - **Criterion 2 (every label F1 ≥ 0.40):** `personal` is 0.000 on every seed and `analysis` is 0.000 on two of three. Same fix: more examples of both. Adding `personal` posts matters most, since 0 of 5 test posts were right on every seed.
-- **Criterion 4 (agreement ≥ 70%):** still PENDING, because `data/staff_labels.csv` has not arrived, so `agreement.py` can't run. I won't report a number until it does, and then I'll fill in the Agreement Report above.
+- **Criterion 4 (agreement ≥ 70%):** met at 29/30 = 96.7%, so nothing to fix here. The caveat is that the staff set uses a different taxonomy, so this doesn't verify my `question`/`opinion` boundary. Re-labelling a sample of my own 200 posts a second time would test that directly, but I didn't do it in this milestone.
 - **Criterion 5 (confidence gap ≥ 15 pts):** the gaps are 0, −10 and 0, and mean confidence is about the same when right as when wrong (0.468 vs 0.459 on seed 42). The softmax is not a usable confidence signal at this data size, and more epochs did not fix it. I'd revisit it only after the thin labels are being predicted, since a model that never predicts two labels has no meaningful confidence on them.
 
 **The gap between what I meant my labels to capture and what the model
