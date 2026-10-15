@@ -366,7 +366,7 @@ Evidence from the confusion matrix and the three results files:
      data/staff_taxonomy.md, not your own — so every argument below is made
      from those definitions and those decision rules. -->
 
-**Agreement rate:** ___ / 30 = ___%
+**Agreement rate:** 29 / 30 = 97%
 
 <!-- Nobody grades this number. A 60% who argues every disagreement from the
      stated rules beats a 95% who wrote "staff was right" nine times. Several
@@ -389,24 +389,15 @@ Evidence from the confusion matrix and the three results files:
      what you did across your own 200. -->
 
 **1.**
-> *The post:*
+> *The post:* "Times are down about 3% since the shoe rules changed, so obviously the shoes are the whole story and the sport has a problem."
 >
-> *Staff said / I said:*
+> *Staff said / I said:* `hot_take` / `analysis`
 >
-> *My call, and why:*
+> *My call, and why:* Both readings are defensible, but I stand by `analysis`. Rule 1 asks whether the fact carries the argument. This post offers a checkable fact (a 3% drop) and a checkable trigger (the shoe rule change), and "so" presents them as the reason for its conclusion. That matches the rule's `analysis` example. Staff's best point is that "obviously" and "the whole story" suggest the conclusion came first, as in the rule's `hot_take` example. But the rule tests whether the fact is load-bearing, not how confident the tone is, and an overclaim makes an argument weak, not absent. The rule doesn't say how to treat a post with both a stated reason and an overreaching conclusion, so it is ambiguous here.
 >
-> *Which pile:*
+> *Which pile:* (c) the rule is ambiguous here and my reading is defensible.
 
-**2.**
-> *The post:*
->
-> *Staff said / I said:*
->
-> *My call, and why:*
->
-> *Which pile:*
-
-**What the pattern in my disagreements tells me:**
+**What the pattern in my disagreements tells me:** With one disagreement in 30 there is no pattern to find, and I won't claim one. What it does show is that I applied the written rules consistently on 29 posts, including the other borderline ones (sp_007, sp_010, sp_016, sp_018, sp_029). The one miss sits on the `analysis`/`hot_take` boundary, where the rule says "load-bearing" without saying how to treat an argument whose conclusion overreaches. That is evidence about the staff rule, not about loose application on my side, but it is thin evidence, and it doesn't speak to my own `question`/`opinion` boundary.
 
 
 
